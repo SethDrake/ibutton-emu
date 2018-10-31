@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+/src/Debug
+/src/Release
+/src/TAGS.txt
+/src/TAGS_Filelist.txt
