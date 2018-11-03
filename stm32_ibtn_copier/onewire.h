@@ -13,18 +13,22 @@ public:
 	void init(USART_TypeDef* usart);
 	bool reset();
 	void send(uint8_t *command, uint8_t cmdLen, uint8_t *data, uint8_t dataLen, uint8_t dataOffset);
+	void sendSlot(uint8_t slot);
+	void setSlowMode(uint8_t enabled);
 	uint8_t crc(uint8_t *data, uint8_t len);
 protected:
 	void byteToSlots(uint8_t byte, uint8_t *slots);
 	uint8_t slotsToByte(uint8_t *slots);
 	void setUsartBaudrate(uint16_t baudrate);
-	void initDMA();
+	void initDMA(uint8_t bufLen);
 private:
 	USART_TypeDef* usart;
 	DMA_Channel_TypeDef* dmaRxChannel;
 	DMA_Channel_TypeDef* dmaTxChannel;
-	uint32_t dmaTCFlag;
+	uint32_t dmaTCRxFlag;
+	uint32_t dmaTCTxFlag;
 	uint8_t buf[8];
+	uint8_t slowMode;
 };
 
 //#define OW_GIVE_TICK_RTOS

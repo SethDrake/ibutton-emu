@@ -85,15 +85,16 @@ void NVIC_Config()
 
 bool iButton_ReadSN(uint8_t* sn)
 {
-	uint8_t cmd[9] = { 0x33, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }; //0x33 - READ_ROM
-	uint8_t response[8] = { 0 };
+	uint8_t cmd[] = { 0x33, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }; //0x33 - READ_ROM
+	const uint8_t respLen = 8;
+	uint8_t response[respLen] = { 0 };
 
 	const bool status = ibutton.reset();
 	if (!status)
 	{
 		return false;		
 	}
-	ibutton.send(cmd, 9, response, 8, 1);
+	ibutton.send(cmd, sizeof(cmd), response, respLen, sizeof(cmd) - respLen);
 	const uint8_t crc = ibutton.crc(response, 7);
 	if (response[7] == crc && (crc != 0x00))
 	{
@@ -106,9 +107,88 @@ bool iButton_ReadSN(uint8_t* sn)
 	return false;
 }
 
+/*bool iButton_IsWriteAllowed()
+{
+	bool status = ibutton.reset();
+	if (!status)
+	{
+		return false;		
+	}
+	uint8_t cmd[] = { 0x1D }; //0xD1 - allow write
+	ibutton.send(cmd, sizeof(cmd), nullptr, 0, 0);
+	ibutton.sendSlot(1); //send 1-slot
+	DelayManager::DelayMs(10);
+	status = ibutton.reset();
+	if (!status)
+	{
+		return false;		
+	}
+	
+	uint8_t cmd2[] = { 0x1E, 0xFF };
+	uint8_t resp = 0x00;
+	ibutton.send(cmd2, sizeof(cmd2), &resp, 1, 1);
+	return (resp == 0xFF);
+}*/
+
+bool iButton_WriteSN(uint8_t* sn)
+{
+	uint8_t fullCode[8];	
+	bool status = ibutton.reset();
+	if (!status)
+	{
+		return false;		
+	}
+
+	fullCode[0] = 0x01; //familty code
+	for (uint8_t i = 0; i < 6; i++) //serial number
+	{
+		fullCode[i + 1] = sn[5-i];
+	}
+	const uint8_t crc = ibutton.crc(fullCode, 7); //crc
+	fullCode[7] = crc;
+
+	/*for (uint8_t i = 0; i < 8; i++)
+	{
+		fullCode[i] = ~fullCode[i];
+	}*/
+
+	uint8_t cmd[] = { 0xD1 }; //0xD1 - allow write
+	ibutton.send(cmd, sizeof(cmd), nullptr, 0, 0);
+	ibutton.sendSlot(0); //send 1-slot
+	DelayManager::DelayMs(10);
+
+	status = ibutton.reset();
+	if (!status)
+	{
+		return false;		
+	}
+	cmd[0] = 0xD5; //0xD5 - begin write
+	ibutton.send(cmd, sizeof(cmd), nullptr, 0, 0);
+
+	ibutton.setSlowMode(true);
+	//write all bytes of code
+	ibutton.send(fullCode, sizeof(fullCode), nullptr, 0, 0);
+	ibutton.setSlowMode(false);
+
+	status = ibutton.reset();
+	if (!status)
+	{
+		return false;		
+	}
+
+	cmd[0] = 0xD1; //0xD1 - block write
+	ibutton.send(cmd, sizeof(cmd), nullptr, 0, 0);
+	ibutton.sendSlot(1); //send 0-slot
+	DelayManager::DelayMs(10);
+
+	return true;
+}
+
 int main()
 {
 	bool status;
+
+	uint8_t newSn[] = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 };
 	
 	Debug_Configuration();
 	Clock_Config();
@@ -117,6 +197,11 @@ int main()
 	NVIC_Config();
 
 	ibutton.init(ONEWIRE_USART);
+	/*status = iButton_ReadSN(ibuttonSn);
+	if (status)
+	{
+		status = iButton_WriteSN(newSn);
+	}*/
 	
 	for (;;)
 	{
