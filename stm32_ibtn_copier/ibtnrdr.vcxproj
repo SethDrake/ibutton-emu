@@ -86,7 +86,7 @@
     <ClCompile Include="delay.cpp" />
     <ClCompile Include="interrupts.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="onewire.c" />
+    <ClCompile Include="onewire.cpp" />
     <ClCompile Include="system_stm32f10x.c" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +123,7 @@
     <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h" />
     <ClInclude Include="delay.h" />
     <ClInclude Include="interrupts.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="onewire.h" />
   </ItemGroup>
   <ItemGroup>

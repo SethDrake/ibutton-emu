@@ -112,13 +112,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="onewire.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="interrupts.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="delay.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="onewire.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -219,6 +219,9 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="delay.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

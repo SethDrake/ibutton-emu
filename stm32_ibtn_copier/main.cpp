@@ -1,22 +1,15 @@
+#include <main.h>
 #include <stm32f10x.h>
 #include "stm32f10x_gpio.h"
 #include "stm32f10x_rcc.h"
 #include "stm32f10x_usart.h"
 #include "stm32f10x_dbgmcu.h"
+#include "misc.h"
 #include "delay.h"
 #include "onewire.h"
-#include "misc.h"
 
-#define USART_PORT    GPIOA
-#define USART_TX_PIN  GPIO_Pin_2
-//#define USART_RX_PIN  GPIO_Pin_3
-
-#define MCO_PORT      GPIOA
-#define MCO_PIN		  GPIO_Pin_8
-
-#define LED_PORT      GPIOC
-#define BLUE_LED_PIN  GPIO_Pin_8
-#define GREEN_LED_PIN GPIO_Pin_9
+OneWire ibutton;
+uint8_t ibuttonSn[6];
 
 void Debug_Configuration();
 void Clock_Config();
@@ -24,6 +17,8 @@ void GPIO_Config();
 void GPIO_Config();
 void USART_Config();
 void NVIC_Config();
+
+bool iButton_ReadSN();
 
 
 void Debug_Configuration()
@@ -48,11 +43,6 @@ void Clock_Config()
 void GPIO_Config()
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
- 
-	GPIO_InitStructure.GPIO_Pin = MCO_PIN;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(MCO_PORT, &GPIO_InitStructure);
 
 	GPIO_InitStructure.GPIO_Pin = BLUE_LED_PIN | GREEN_LED_PIN;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
@@ -63,11 +53,6 @@ void GPIO_Config()
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_OD;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(USART_PORT, &GPIO_InitStructure);
-
-	/*GPIO_InitStructure.GPIO_Pin = USART_RX_PIN;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(USART_PORT, &GPIO_InitStructure);*/
 }
 
 void USART_Config() {
@@ -79,11 +64,10 @@ void USART_Config() {
 	USART_InitStructure.USART_Parity = USART_Parity_No;
 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
 	USART_InitStructure.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
-	USART_Init(USART2, &USART_InitStructure);
-	USART_HalfDuplexCmd(USART2, ENABLE);
-	USART_Cmd(USART2, ENABLE);
+	USART_Init(ONEWIRE_USART, &USART_InitStructure);
+	USART_HalfDuplexCmd(ONEWIRE_USART, ENABLE);
+	USART_Cmd(ONEWIRE_USART, ENABLE);
 }
-
 
 void NVIC_Config()
 {
@@ -98,39 +82,49 @@ void NVIC_Config()
 	NVIC_EnableIRQ(DMA1_Channel7_IRQn);*/
 }
 
+
+bool iButton_ReadSN(uint8_t* sn)
+{
+	uint8_t cmd[9] = { 0x33, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }; //0x33 - READ_ROM
+	uint8_t response[8] = { 0 };
+
+	const bool status = ibutton.reset();
+	if (!status)
+	{
+		return false;		
+	}
+	ibutton.send(cmd, 9, response, 8, 1);
+	const uint8_t crc = ibutton.crc(response, 7);
+	if (response[7] == crc && (crc != 0x00))
+	{
+		for (uint8_t i = 0; i < 6; i++)
+		{
+			sn[i] = response[6 - i];
+		}  
+		return true;
+	}
+	return false;
+}
+
 int main()
 {
-	uint8_t response[8] = {0};
-	uint8_t key_sn[6] = {0};
-	uint8_t crc = 0x00;
+	bool status;
 	
 	Debug_Configuration();
 	Clock_Config();
 	GPIO_Config();
 	USART_Config();
 	NVIC_Config();
+
+	ibutton.init(ONEWIRE_USART);
 	
 	for (;;)
 	{
-		uint8_t cmd[9] = { 0x33, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
-		uint8_t status = OW_Send(OW_SEND_RESET, cmd, 9, response, 8, 1);
-		if (status == OW_OK)
+		status = iButton_ReadSN(ibuttonSn);
+		if (status)
 		{
-			crc = OW_CRC(response, 7);
-			if (response[7] == crc && (crc != 0x00))
-			{
-				for (uint8_t i = 0; i < 6; i++)
-				{
-					key_sn[i] = response[6 - i];
-				}  
-				GPIO_WriteBit(LED_PORT, GREEN_LED_PIN, Bit_SET);
-				GPIO_WriteBit(LED_PORT, BLUE_LED_PIN, Bit_RESET);
-			}
-			else
-			{
-				GPIO_WriteBit(LED_PORT, GREEN_LED_PIN, Bit_RESET);
-				GPIO_WriteBit(LED_PORT, BLUE_LED_PIN, Bit_SET);
-			}
+			GPIO_WriteBit(LED_PORT, GREEN_LED_PIN, Bit_SET);
+			GPIO_WriteBit(LED_PORT, BLUE_LED_PIN, Bit_RESET);
 		}
 		else
 		{

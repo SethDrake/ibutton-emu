@@ -40,3 +40,5 @@
 /stm32_reader_src/ibtnrdr/ibtnrdr.VC.db
 /stm32_ibtn_copier/VisualGDB
 /stm32_ibtn_copier/ibtnrdr.VC.db
+/stm32_ibtn_copier/.vs/ibtnrdr/v14/*.suo
+/stm32_ibtn_copier/*.opendb
