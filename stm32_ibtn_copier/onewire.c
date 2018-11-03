@@ -1,10 +1,3 @@
-/*
- * onewire.c
- *
- *  Created on: 13.02.2012
- *      Author: di
- */
-
 #include "onewire.h"
 #include "stm32f10x.h"
 #include "stm32f10x_usart.h"
@@ -105,7 +98,7 @@ uint8_t OW_Reset() {
 #endif
 	}
 
-	uint8_t ow_presence = USART_ReceiveData(OW_USART);
+	const uint8_t ow_presence = USART_ReceiveData(OW_USART);
 
 	USART_Cmd(OW_USART, DISABLE);
 	USART_InitStructure.USART_BaudRate = 115200;
@@ -125,17 +118,6 @@ uint8_t OW_Reset() {
 }
 
 
-//-----------------------------------------------------------------------------
-// процедура общения с шиной 1-wire
-// sendReset - посылать RESET в начале общения.
-// 		OW_SEND_RESET или OW_NO_RESET
-// command - массив байт, отсылаемых в шину. Если нужно чтение - отправляем OW_READ_SLOT
-// cLen - длина буфера команд, столько байт отошлется в шину
-// data - если требуется чтение, то ссылка на буфер для чтения
-// dLen - длина буфера для чтения. Прочитается не более этой длины
-// readStart - с какого символа передачи начинать чтение (нумеруются с 0)
-//		можно указать OW_NO_READ, тогда можно не задавать data и dLen
-//-----------------------------------------------------------------------------
 uint8_t OW_Send(uint8_t sendReset, uint8_t *command, uint8_t cLen, uint8_t *data, uint8_t dLen, uint8_t readStart) {
 
 	// если требуется сброс - сбрасываем и проверяем на наличие устройств
@@ -144,8 +126,6 @@ uint8_t OW_Send(uint8_t sendReset, uint8_t *command, uint8_t cLen, uint8_t *data
 			return OW_NO_DEVICE;
 		}
 	}
-
-	uint8_t tick = 0;
 
 	while (cLen > 0) {
 
@@ -156,7 +136,7 @@ uint8_t OW_Send(uint8_t sendReset, uint8_t *command, uint8_t cLen, uint8_t *data
 		DMA_InitTypeDef DMA_InitStructure;
 
 		// DMA на запись
-		/*DMA_DeInit(OW_DMA_CH_TX);
+		DMA_DeInit(OW_DMA_CH_TX);
 		DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) &(OW_USART->DR);
 		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) &ow_buf;
 		DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
@@ -168,12 +148,12 @@ uint8_t OW_Send(uint8_t sendReset, uint8_t *command, uint8_t cLen, uint8_t *data
 		DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
 		DMA_InitStructure.DMA_Priority = DMA_Priority_Low;
 		DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-		DMA_Init(OW_DMA_CH_TX, &DMA_InitStructure);*/
+		DMA_Init(OW_DMA_CH_TX, &DMA_InitStructure);
 
 		// DMA на чтение
-		/*DMA_DeInit(OW_DMA_CH_RX);
+		DMA_DeInit(OW_DMA_CH_RX);
 		DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) &(OW_USART->DR);
-		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) ow_buf;
+		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) &ow_buf2;
 		DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
 		DMA_InitStructure.DMA_BufferSize = 8;
 		DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
@@ -183,39 +163,25 @@ uint8_t OW_Send(uint8_t sendReset, uint8_t *command, uint8_t cLen, uint8_t *data
 		DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
 		DMA_InitStructure.DMA_Priority = DMA_Priority_Low;
 		DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-		DMA_Init(OW_DMA_CH_RX, &DMA_InitStructure);*/
+		DMA_Init(OW_DMA_CH_RX, &DMA_InitStructure);
 
 		// старт цикла отправки
-		/*USART_ClearFlag(OW_USART, USART_FLAG_RXNE | USART_FLAG_TC | USART_FLAG_TXE);
+		USART_ClearFlag(OW_USART, USART_FLAG_RXNE | USART_FLAG_TC | USART_FLAG_TXE);
 		USART_DMACmd(OW_USART, USART_DMAReq_Tx | USART_DMAReq_Rx, ENABLE);
 		DMA_Cmd(OW_DMA_CH_TX, ENABLE);
-		DMA_Cmd(OW_DMA_CH_RX, ENABLE);*/
+		DMA_Cmd(OW_DMA_CH_RX, ENABLE);
 
 		// Ждем, пока не примем 8 байт
-		/*while (DMA_GetFlagStatus(OW_DMA_FLAG) == RESET){
+		while (DMA_GetFlagStatus(OW_DMA_FLAG) == RESET){
 #ifdef OW_GIVE_TICK_RTOS
 			taskYIELD();
 #endif
-		}*/
+		}
 
 		// отключаем DMA
-		/*DMA_Cmd(OW_DMA_CH_TX, DISABLE);
+		DMA_Cmd(OW_DMA_CH_TX, DISABLE);
 		DMA_Cmd(OW_DMA_CH_RX, DISABLE);
-		USART_DMACmd(OW_USART, USART_DMAReq_Tx | USART_DMAReq_Rx, DISABLE);*/
-
-		//memset(ow_buf2, 0x00, 8);
-
-		for (uint8_t i = 0; i < 8; i++)
-		{
-			USART_SendData(OW_USART, ow_buf[i]);
-			while (USART_GetFlagStatus(OW_USART, USART_FLAG_TC) == RESET) {
-#ifdef OW_GIVE_TICK_RTOS
-				taskYIELD();
-#endif
-			}
-
-			ow_buf2[i] = USART_ReceiveData(OW_USART);
-		}
+		USART_DMACmd(OW_USART, USART_DMAReq_Tx | USART_DMAReq_Rx, DISABLE);
 
 		if (readStart == 0 && dLen > 0) {
 			*data = OW_toByte(ow_buf2);

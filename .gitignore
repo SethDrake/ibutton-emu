@@ -34,3 +34,9 @@
 /src/Release
 /src/TAGS.txt
 /src/TAGS_Filelist.txt
+/stm32_reader_src/ibtnrdr/VisualGDB
+/stm32_reader_src/ibtnrdr/.vs/ibtnrdr/v14/.suo
+/stm32_reader_src/ibtnrdr/ibtnrdr.VC.VC.opendb
+/stm32_reader_src/ibtnrdr/ibtnrdr.VC.db
+/stm32_ibtn_copier/VisualGDB
+/stm32_ibtn_copier/ibtnrdr.VC.db

@@ -2,6 +2,7 @@
 #include "stm32f10x_gpio.h"
 #include "stm32f10x_rcc.h"
 #include "stm32f10x_usart.h"
+#include "stm32f10x_dbgmcu.h"
 #include "delay.h"
 #include "onewire.h"
 #include "misc.h"
@@ -17,6 +18,7 @@
 #define BLUE_LED_PIN  GPIO_Pin_8
 #define GREEN_LED_PIN GPIO_Pin_9
 
+void Debug_Configuration();
 void Clock_Config();
 void GPIO_Config();
 void GPIO_Config();
@@ -24,10 +26,18 @@ void USART_Config();
 void NVIC_Config();
 
 
+void Debug_Configuration()
+{
+	DBGMCU_Config(DBGMCU_SLEEP | DBGMCU_STANDBY | DBGMCU_STOP, ENABLE); //Enable debug in powersafe modes
+	
+	SCB->CCR |= SCB_CCR_DIV_0_TRP;	
+}
+
 void Clock_Config()
 {
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOC | RCC_APB2Periph_AFIO | RCC_APB1Periph_USART2 | 
-						   RCC_AHBPeriph_DMA1 | RCC_APB1Periph_BKP | RCC_APB1Periph_PWR, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2 | RCC_APB1Periph_BKP | RCC_APB1Periph_PWR, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOC | RCC_APB2Periph_AFIO, ENABLE);
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 	
 	RCC_MCOConfig(RCC_MCO_PLLCLK_Div2);
 
@@ -79,13 +89,13 @@ void NVIC_Config()
 {
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
 	
-	NVIC_InitTypeDef NVIC_InitStructure;
+	/*NVIC_InitTypeDef NVIC_InitStructure;
 	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel7_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x05;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x00;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
-	NVIC_EnableIRQ(DMA1_Channel7_IRQn);
+	NVIC_EnableIRQ(DMA1_Channel7_IRQn);*/
 }
 
 int main()
@@ -94,6 +104,7 @@ int main()
 	uint8_t key_sn[6] = {0};
 	uint8_t crc = 0x00;
 	
+	Debug_Configuration();
 	Clock_Config();
 	GPIO_Config();
 	USART_Config();
