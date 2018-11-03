@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{d364b9c8-4994-4216-8c99-cb026cbc941a}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{143bff61-d0db-4b76-9ef1-9c7145e09dd9}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource files">
+      <UniqueIdentifier>{dd8d9b1e-f721-41dd-a1b8-18ad40f762c8}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="VisualGDB settings">
+      <UniqueIdentifier>{8056c44b-7e06-4a7d-8d4f-5992645c3801}</UniqueIdentifier>
+      <Extensions>*.vgdbsettings</Extensions>
+    </Filter>
+    <Filter Include="Source files\Device-specific files">
+      <UniqueIdentifier>{619dc7fb-bc7f-4643-9a8b-67aad73066d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Device-specific files">
+      <UniqueIdentifier>{944dc798-fd64-43d8-9e1f-a25b6069cba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Device-specific files\StdPeriph">
+      <UniqueIdentifier>{16c90a96-40e5-4e63-9e27-68d29b84b746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Device-specific files\StdPeriph">
+      <UniqueIdentifier>{4eef31a3-8f6e-4d36-8475-f6dd041100ca}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="system_stm32f10x.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\StartupFiles\startup_stm32f103xb.c">
+      <Filter>Source files\Device-specific files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\misc.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\CMSIS_StdPeriph\CM3\CoreSupport\core_cm3.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="onewire.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="interrupts.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="delay.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ibtnrdr-Debug.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="ibtnrdr-Release.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="stm32.props">
+      <Filter>Source files\Device-specific files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\misc.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_can.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_cec.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_crc.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dac.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dbgmcu.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_fsmc.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_i2c.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_iwdg.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_sdio.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\CMSIS_StdPeriph\CM3\CoreSupport\core_cm3.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\CMSIS_StdPeriph\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\serge\AppData\Local\VisualGDB\EmbeddedBSPs\arm-eabi\com.sysprogs.arm.stm32\STM32F1xxxx\CMSIS_StdPeriph\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h">
+      <Filter>Header files\Device-specific files\StdPeriph</Filter>
+    </ClInclude>
+    <ClInclude Include="onewire.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="interrupts.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="delay.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="stm32.xml">
+      <Filter>VisualGDB settings</Filter>
+    </Xml>
+  </ItemGroup>
+</Project>

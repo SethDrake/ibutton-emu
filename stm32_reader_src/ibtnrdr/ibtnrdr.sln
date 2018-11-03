@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ibtnrdr", "ibtnrdr.vcxproj", "{F3BC16E2-60D2-4707-B7FD-3933C443D2BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|VisualGDB = Debug|VisualGDB
+		Release|VisualGDB = Release|VisualGDB
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3BC16E2-60D2-4707-B7FD-3933C443D2BF}.Debug|VisualGDB.ActiveCfg = Debug|VisualGDB
+		{F3BC16E2-60D2-4707-B7FD-3933C443D2BF}.Debug|VisualGDB.Build.0 = Debug|VisualGDB
+		{F3BC16E2-60D2-4707-B7FD-3933C443D2BF}.Release|VisualGDB.ActiveCfg = Release|VisualGDB
+		{F3BC16E2-60D2-4707-B7FD-3933C443D2BF}.Release|VisualGDB.Build.0 = Release|VisualGDB
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
