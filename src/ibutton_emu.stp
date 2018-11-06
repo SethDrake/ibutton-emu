@@ -83,10 +83,10 @@ String.100.0=STM8S103F3P
 
 [Root.Config.0.Settings.3]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -i..\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc  +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S103 $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S103 -i..\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2018,10,31,19,44,16
+String.6.0=2018,11,6,22,28,33
 
 [Root.Config.0.Settings.4]
 String.2.0=Assembling $(InputFile)...
@@ -130,7 +130,8 @@ Int.1=0
 [Root.Config.0.Settings.7]
 String.2.0=Running Post-Build step
 String.3.0=chex -o $(OutputPath)$(TargetSName).s19 $(OutputPath)$(TargetSName).sm8
-String.6.0=2018,10,31,17,15,23
+String.3.1=zformat.bat "$(ToolsetBin)" "$(WorkspacePath)\$(OutputPath)$(TargetSName).sm8" "$(WorkspacePath)\$(OutputPath)$(TargetSName).lkf"
+String.6.0=2018,11,6,20,21,5
 
 [Root.Config.0.Settings.8]
 String.2.0=Performing Custom Build on $(InputFile)
@@ -187,8 +188,8 @@ String.2.0=Running Linker
 String.3.0=clnk $(ToolsetLibOpts) -o $(OutputPath)$(TargetSName).sm8 -fakeInteger -fakeOutFile$(ProjectSFile).elf -fakeRunConv -fakeStartupcrtsi0.sm8 -fakeSemiAutoGen -fakeVectAddr0x8000 -customMapAddress -customCfgFile$(OutputPath)$(TargetSName).lkf 
 String.3.1=cvdwarf $(OutputPath)$(TargetSName).sm8
 String.4.0=$(OutputPath)$(TargetFName)
-String.5.0=$(OutputPath)$(ProjectSFile).elf
-String.6.0=2018,10,31,20,0,5
+String.5.0=
+String.6.0=2018,11,6,20,21,5
 String.100.0=
 String.101.0=crtsi.st7
 String.102.0=+seg .const -b 0x8080 -m 0x1f80 -n .const -it
@@ -212,7 +213,8 @@ Int.1=0
 [Root.Config.1.Settings.7]
 String.2.0=Running Post-Build step
 String.3.0=chex -o $(OutputPath)$(TargetSName).s19 $(OutputPath)$(TargetSName).sm8
-String.6.0=2018,10,31,17,15,23
+String.3.1=zformat.bat "$(ToolsetBin)" "$(WorkspacePath)\$(OutputPath)$(TargetSName).sm8" "$(WorkspacePath)\$(OutputPath)$(TargetSName).lkf"
+String.6.0=2018,11,6,20,21,5
 
 [Root.Config.1.Settings.8]
 String.2.0=Performing Custom Build on $(InputFile)
@@ -221,7 +223,7 @@ String.6.0=2018,10,31,17,15,23
 [Root.Source Files]
 ElemType=Folder
 PathName=Source Files
-Child=Root.Source Files...\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_flash.h
+Child=Root.Source Files...\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_exti.c
 Next=Root.Include Files
 Config.0=Root.Source Files.Config.0
 Config.1=Root.Source Files.Config.1
@@ -246,10 +248,10 @@ Int.1=0
 
 [Root.Source Files.Config.0.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -i..\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc  +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S103 $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S103 -i..\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2018,10,31,19,44,16
+String.6.0=2018,11,6,22,28,33
 
 [Root.Source Files.Config.0.Settings.2]
 String.2.0=Assembling $(InputFile)...
@@ -292,9 +294,14 @@ String.4.0=
 String.5.0=
 String.6.0=2018,10,31,17,15,23
 
-[Root.Source Files...\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_flash.h]
+[Root.Source Files...\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_exti.c]
 ElemType=File
-PathName=..\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_flash.h
+PathName=..\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_exti.c
+Next=Root.Source Files.onewire.c
+
+[Root.Source Files.onewire.c]
+ElemType=File
+PathName=onewire.c
 Next=Root.Source Files...\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_gpio.c
 
 [Root.Source Files...\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_gpio.c]
@@ -324,7 +331,7 @@ PathName=main.c
 [Root.Include Files]
 ElemType=Folder
 PathName=Include Files
-Child=Root.Include Files...\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_conf.h
+Child=Root.Include Files.onewire.h
 Config.0=Root.Include Files.Config.0
 Config.1=Root.Include Files.Config.1
 
@@ -348,10 +355,10 @@ Int.1=0
 
 [Root.Include Files.Config.0.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -i..\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc  +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S103 $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S103 -i..\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2018,10,31,19,44,16
+String.6.0=2018,11,6,22,28,33
 
 [Root.Include Files.Config.0.Settings.2]
 String.2.0=Assembling $(InputFile)...
@@ -393,6 +400,16 @@ String.3.0=
 String.4.0=
 String.5.0=
 String.6.0=2018,10,31,17,15,23
+
+[Root.Include Files.onewire.h]
+ElemType=File
+PathName=onewire.h
+Next=Root.Include Files.delay.h
+
+[Root.Include Files.delay.h]
+ElemType=File
+PathName=delay.h
+Next=Root.Include Files...\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_conf.h
 
 [Root.Include Files...\..\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_conf.h]
 ElemType=File

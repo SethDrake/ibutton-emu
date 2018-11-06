@@ -147,14 +147,14 @@ bool iButton_WriteSN(uint8_t* sn)
 	const uint8_t crc = ibutton.crc(fullCode, 7); //crc
 	fullCode[7] = crc;
 
-	/*for (uint8_t i = 0; i < 8; i++)
+	for (uint8_t i = 0; i < 8; i++)
 	{
 		fullCode[i] = ~fullCode[i];
-	}*/
+	}
 
 	uint8_t cmd[] = { 0xD1 }; //0xD1 - allow write
 	ibutton.send(cmd, sizeof(cmd), nullptr, 0, 0);
-	ibutton.sendSlot(0); //send 1-slot
+	ibutton.sendSlot(0); //send 0-slot
 	DelayManager::DelayMs(10);
 
 	status = ibutton.reset();
@@ -178,7 +178,7 @@ bool iButton_WriteSN(uint8_t* sn)
 
 	cmd[0] = 0xD1; //0xD1 - block write
 	ibutton.send(cmd, sizeof(cmd), nullptr, 0, 0);
-	ibutton.sendSlot(1); //send 0-slot
+	ibutton.sendSlot(1); //send 1-slot
 	DelayManager::DelayMs(10);
 
 	return true;
