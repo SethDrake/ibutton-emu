@@ -11,6 +11,8 @@
 OneWire ibutton;
 uint8_t ibuttonSn[6];
 
+volatile MODE mode = MODE_READ;
+
 void Debug_Configuration();
 void Clock_Config();
 void GPIO_Config();
@@ -18,8 +20,11 @@ void GPIO_Config();
 void USART_Config();
 void NVIC_Config();
 
-bool iButton_ReadSN();
-
+bool iButton_ReadSN(uint8_t* sn);
+bool iButton_WriteSN(uint8_t* sn);
+IBUTTON_KEY_TYPE iButton_Test();
+void readKeys();
+void clearSn();
 
 void Debug_Configuration()
 {
@@ -49,10 +54,10 @@ void GPIO_Config()
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(LED_PORT, &GPIO_InitStructure);
 
-	GPIO_InitStructure.GPIO_Pin = USART_TX_PIN;
+	GPIO_InitStructure.GPIO_Pin = ONEWIRE_PIN;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_OD;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(USART_PORT, &GPIO_InitStructure);
+	GPIO_Init(ONEWIRE_PORT, &GPIO_InitStructure);
 }
 
 void USART_Config() {
@@ -89,6 +94,7 @@ bool iButton_ReadSN(uint8_t* sn)
 	const uint8_t respLen = 8;
 	uint8_t response[respLen] = { 0 };
 
+	ibutton.skip();
 	const bool status = ibutton.reset();
 	if (!status)
 	{
@@ -107,39 +113,105 @@ bool iButton_ReadSN(uint8_t* sn)
 	return false;
 }
 
-/*bool iButton_IsWriteAllowed()
+IBUTTON_KEY_TYPE iButton_Test()
 {
+	uint8_t cmd[9] = { 0x00 };
+	uint8_t response[9] = { 0x00 };
+
+	/* Test for “Ã2004 */
 	bool status = ibutton.reset();
 	if (!status)
 	{
-		return false;		
+		return UNKNOWN;		
 	}
-	uint8_t cmd[] = { 0x1D }; //0xD1 - allow write
-	ibutton.send(cmd, sizeof(cmd), nullptr, 0, 0);
-	ibutton.sendSlot(1); //send 1-slot
+	ibutton.skip();
+	// 0xAA - read status register
+	cmd[0] = 0xAA;
+	cmd[1] = 0x00;
+	cmd[2] = 0x00;
+	cmd[3] = 0xFF;
+	ibutton.send(cmd, 4, response, 4, 3);
+	if (response[0] == 0x9C)
+	{
+		//TM2004
+		return TM2004;
+	}
+
+	/* Test for RW1990.1 */
+	status = ibutton.reset();
+	if (!status)
+	{
+		return UNKNOWN;		
+	}
+	cmd[0] = 0xD1;
+	ibutton.send(cmd, 1, nullptr, 0, 0);
+	ibutton.sendSlot(1);
 	DelayManager::DelayMs(10);
 	status = ibutton.reset();
 	if (!status)
 	{
-		return false;		
+		return UNKNOWN;		
 	}
-	
-	uint8_t cmd2[] = { 0x1E, 0xFF };
-	uint8_t resp = 0x00;
-	ibutton.send(cmd2, sizeof(cmd2), &resp, 1, 1);
-	return (resp == 0xFF);
-}*/
+	cmd[0] = 0xB5;
+	cmd[1] = 0xFF;
+	ibutton.send(cmd, 2, response, 2, 1);
+	if (response[0] != 0xFF)
+	{
+		//TODO: add additional checks
+		return RW_1990_1;	
+	}
+
+	/* Test for RW1990.2 */
+	status = ibutton.reset();
+	if (!status)
+	{
+		return UNKNOWN;		
+	}
+	cmd[0] = 0x1D;
+	ibutton.send(cmd, 1, nullptr, 0, 0);
+	ibutton.sendSlot(0);
+	DelayManager::DelayMs(10);
+	status = ibutton.reset();
+	if (!status)
+	{
+		return UNKNOWN;		
+	}
+	cmd[0] = 0x1E;
+	cmd[1] = 0xFF;
+	ibutton.send(cmd, 2, response, 2, 1);
+	if (response[0] == 0xFF)
+	{
+		status = ibutton.reset();
+		if (!status)
+		{
+			return UNKNOWN;		
+		}
+		cmd[0] = 0x1D;
+		ibutton.send(cmd, 1, nullptr, 0, 0);
+		ibutton.sendSlot(1);
+		DelayManager::DelayMs(10);
+		status = ibutton.reset();
+		if (!status)
+		{
+			return UNKNOWN;		
+		}
+		cmd[0] = 0x1E;
+		cmd[1] = 0xFF;
+		ibutton.send(cmd, 2, response, 2, 1);
+		if (response[0] != 0xFF)
+		{
+			return RW_1990_2;
+		}
+	}
+
+	return UNKNOWN;
+}
+
 
 bool iButton_WriteSN(uint8_t* sn)
 {
 	uint8_t fullCode[8];	
-	bool status = ibutton.reset();
-	if (!status)
-	{
-		return false;		
-	}
-
-	fullCode[0] = 0x01; //familty code
+	fullCode[0] = 0x01; //family code
 	for (uint8_t i = 0; i < 6; i++) //serial number
 	{
 		fullCode[i + 1] = sn[5-i];
@@ -147,9 +219,11 @@ bool iButton_WriteSN(uint8_t* sn)
 	const uint8_t crc = ibutton.crc(fullCode, 7); //crc
 	fullCode[7] = crc;
 
-	for (uint8_t i = 0; i < 8; i++)
+	ibutton.skip();
+	bool status = ibutton.reset();
+	if (!status)
 	{
-		fullCode[i] = ~fullCode[i];
+		return false;		
 	}
 
 	uint8_t cmd[] = { 0xD1 }; //0xD1 - allow write
@@ -157,18 +231,22 @@ bool iButton_WriteSN(uint8_t* sn)
 	ibutton.sendSlot(0); //send 0-slot
 	DelayManager::DelayMs(10);
 
+	ibutton.skip();
 	status = ibutton.reset();
 	if (!status)
 	{
 		return false;		
 	}
-	cmd[0] = 0xD5; //0xD5 - begin write
-	ibutton.send(cmd, sizeof(cmd), nullptr, 0, 0);
 
-	ibutton.setSlowMode(true);
-	//write all bytes of code
-	ibutton.send(fullCode, sizeof(fullCode), nullptr, 0, 0);
-	ibutton.setSlowMode(false);
+	//write command 0xD5 and all bytes of serial number
+	cmd[0] = 0xD5;  //0xD5 - write
+	ibutton.send(cmd, sizeof(cmd), nullptr, 0, 0);
+	for (uint8_t i = 0; i < 8; i++) //serial number
+	{
+		uint8_t byte = fullCode[i];
+		ibutton.send(&byte, sizeof(1), nullptr, 0, 0);
+		//DelayManager::DelayUs(5);
+	}
 
 	status = ibutton.reset();
 	if (!status)
@@ -184,11 +262,27 @@ bool iButton_WriteSN(uint8_t* sn)
 	return true;
 }
 
+void readKeys()
+{
+	bool keyState = GPIO_ReadInputDataBit(KEYS_PORT, USER_KEY_PIN);
+	DelayManager::DelayMs(10);
+	keyState = keyState && GPIO_ReadInputDataBit(KEYS_PORT, USER_KEY_PIN);
+	if (keyState)
+	{
+		mode = MODE_WRITE;		
+	}
+}
+
+
+void clearSn()
+{
+}
+
 int main()
 {
 	bool status;
 
-	uint8_t newSn[] = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 };
+	uint8_t newSn[] = { 0x01, 0x01, 0x01, 0x01, 0x01, 0x01 };
 	
 	Debug_Configuration();
 	Clock_Config();
@@ -196,25 +290,52 @@ int main()
 	USART_Config();
 	NVIC_Config();
 
+	DelayManager::SetClock();
 	ibutton.init(ONEWIRE_USART);
-	/*status = iButton_ReadSN(ibuttonSn);
-	if (status)
-	{
-		status = iButton_WriteSN(newSn);
-	}*/
 	
 	for (;;)
 	{
-		status = iButton_ReadSN(ibuttonSn);
-		if (status)
+		readKeys();
+		if (mode == MODE_READ)
 		{
-			GPIO_WriteBit(LED_PORT, GREEN_LED_PIN, Bit_SET);
-			GPIO_WriteBit(LED_PORT, BLUE_LED_PIN, Bit_RESET);
+			clearSn();
+			status = iButton_ReadSN(ibuttonSn);
+			if (status)
+			{
+				GPIO_WriteBit(LED_PORT, GREEN_LED_PIN, Bit_SET);
+				GPIO_WriteBit(LED_PORT, BLUE_LED_PIN, Bit_RESET);
+			}
+			else
+			{
+				GPIO_WriteBit(LED_PORT, GREEN_LED_PIN, Bit_RESET);
+				GPIO_WriteBit(LED_PORT, BLUE_LED_PIN, Bit_SET);
+			}
 		}
-		else
+		else if (mode == MODE_WRITE)
 		{
 			GPIO_WriteBit(LED_PORT, GREEN_LED_PIN, Bit_RESET);
 			GPIO_WriteBit(LED_PORT, BLUE_LED_PIN, Bit_SET);
+			status = iButton_WriteSN(newSn);
+			//status = iButton_Test();
+			if (status)
+			{
+				GPIO_WriteBit(LED_PORT, BLUE_LED_PIN, Bit_RESET);
+				for (uint8_t i = 0; i < 5; i++)
+				{
+					GPIO_WriteBit(LED_PORT, GREEN_LED_PIN, Bit_SET);
+					DelayManager::DelayMs(200);
+					GPIO_WriteBit(LED_PORT, GREEN_LED_PIN, Bit_RESET);
+					DelayManager::DelayMs(200);
+				}
+				clearSn();
+				status = iButton_ReadSN(ibuttonSn);
+				if (status)
+				{
+					GPIO_WriteBit(LED_PORT, GREEN_LED_PIN, Bit_SET);	
+				}
+			}
+			DelayManager::DelayMs(5000);
+			mode = MODE_READ;
 		}
 		DelayManager::DelayMs(1000);
 	}

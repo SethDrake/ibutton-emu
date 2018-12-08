@@ -73,6 +73,13 @@ void OneWire::initDMA(const uint8_t bufLen)
 	DMA_Init(dmaRxChannel, &DMA_InitStructure);
 }
 
+
+void OneWire::skip()
+{
+	uint8_t cmd[] = { 0xCC };
+	send(cmd, 1, nullptr, 0, 0);
+}
+
 bool OneWire::reset()
 {
 	USART_Cmd(usart, DISABLE);
@@ -90,6 +97,19 @@ bool OneWire::reset()
 	setUsartBaudrate(115200);
 	USART_Cmd(usart, ENABLE);
 	return (response != 0xF0);
+}
+
+uint8_t OneWire::progImpulse()
+{
+	USART_ClearFlag(usart, USART_FLAG_TC);
+	USART_SendData(usart, 0xFF);
+	while (USART_GetFlagStatus(usart, USART_FLAG_TC) == RESET) {
+#ifdef RTOS_DELAY_FUNC
+		RTOS_DELAY_FUNC;
+#endif
+	}
+	const uint8_t response = USART_ReceiveData(usart);
+	return response;
 }
 
 void OneWire::send(uint8_t* command, uint8_t cmdLen, uint8_t* data, uint8_t dataLen, uint8_t dataOffset)
@@ -162,7 +182,7 @@ void OneWire::sendSlot(const uint8_t slot)
 
 	if (slot == 0x00) 
 	{
-		buf[0] = 0x00; //set 0-slot
+		buf[0] = 0xE0; //set 0-slot
 	}
 	else
 	{
@@ -230,7 +250,7 @@ uint8_t OneWire::slotsToByte(uint8_t* slots)
 	return byte;
 }
 
-void OneWire::setUsartBaudrate(uint16_t baudrate)
+void OneWire::setUsartBaudrate(const  uint32_t baudrate)
 {
 	uint32_t apbclock;
 	const uint32_t usartxbase = (uint32_t)usart; 

@@ -12,11 +12,13 @@ private:
 	
 	volatile static uint32_t timingDelay;
 	volatile static uint64_t sysTickCount;
+	volatile static uint32_t hclkFreq;
 
 public:
 	static void DelayMs(volatile uint32_t nTime);
 	static void DelayUs(volatile uint32_t nTime);
 	static void Delay(volatile uint32_t nTime);
+	static void SetClock();
 	static void TimingDelay_Decrement();
 	static void SysTickIncrement();
 	static uint64_t GetSysTickCount();
