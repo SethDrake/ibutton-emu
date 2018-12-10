@@ -9633,6 +9633,7 @@ Thru-hole RA Female Mini-B USB Connector 4UConnector: 18732&lt;/p&gt;
 <part name="SW1" library="buttons" deviceset="10-XX" device="-4.5SMD" value="SWITCH"/>
 <part name="R4" library="resistor" deviceset="R-EU_" device="R0805" value="10k"/>
 <part name="CN1" library="adafruit" deviceset="USB" device="MINIB" value="MINI-USB"/>
+<part name="R5" library="resistor" deviceset="R-EU_" device="R0805" value="1.5k"/>
 </parts>
 <sheets>
 <sheet>
@@ -9663,6 +9664,7 @@ Thru-hole RA Female Mini-B USB Connector 4UConnector: 18732&lt;/p&gt;
 <instance part="SW1" gate="1" x="139.7" y="55.88"/>
 <instance part="R4" gate="G$1" x="129.54" y="38.1" rot="R270"/>
 <instance part="CN1" gate="G$1" x="167.64" y="60.96" rot="R180"/>
+<instance part="R5" gate="G$1" x="96.52" y="76.2" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -9702,6 +9704,9 @@ Thru-hole RA Female Mini-B USB Connector 4UConnector: 18732&lt;/p&gt;
 <pinref part="CN1" gate="G$1" pin="VBUS"/>
 <wire x1="157.48" y1="55.88" x2="147.32" y2="55.88" width="0.1524" layer="91"/>
 <junction x="147.32" y="55.88"/>
+<pinref part="R5" gate="G$1" pin="2"/>
+<wire x1="96.52" y1="81.28" x2="96.52" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="96.52" y1="83.82" x2="104.14" y2="83.82" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="RESET" class="0">
@@ -9864,14 +9869,14 @@ Thru-hole RA Female Mini-B USB Connector 4UConnector: 18732&lt;/p&gt;
 <wire x1="15.24" y1="68.58" x2="17.78" y2="68.58" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$22" class="0">
+<net name="RXD" class="0">
 <segment>
 <pinref part="JP2" gate="G$1" pin="1"/>
 <pinref part="IC1" gate="IC" pin="PD0(RXD/PCINT16)"/>
 <wire x1="119.38" y1="68.58" x2="83.82" y2="68.58" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$23" class="0">
+<net name="TXD" class="0">
 <segment>
 <pinref part="IC1" gate="IC" pin="PD1(TXD/PCINT17)"/>
 <pinref part="JP2" gate="G$1" pin="2"/>
@@ -9895,7 +9900,11 @@ Thru-hole RA Female Mini-B USB Connector 4UConnector: 18732&lt;/p&gt;
 <wire x1="119.38" y1="50.8" x2="114.3" y2="50.8" width="0.1524" layer="91"/>
 <wire x1="114.3" y1="50.8" x2="114.3" y2="60.96" width="0.1524" layer="91"/>
 <pinref part="IC1" gate="IC" pin="PD3(INT1/OC2B/PCINT19)"/>
-<wire x1="114.3" y1="60.96" x2="83.82" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="60.96" x2="96.52" y2="60.96" width="0.1524" layer="91"/>
+<pinref part="R5" gate="G$1" pin="1"/>
+<wire x1="96.52" y1="60.96" x2="83.82" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="96.52" y1="71.12" x2="96.52" y2="60.96" width="0.1524" layer="91"/>
+<junction x="96.52" y="60.96"/>
 </segment>
 </net>
 </nets>
